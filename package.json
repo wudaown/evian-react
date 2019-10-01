@@ -10,9 +10,13 @@
     "react-dom": "^16.9.0",
     "react-html5-camera-photo": "^1.4.3",
     "react-loading": "^2.0.3",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.1",
     "react-signature-canvas": "^1.0.3",
-    "react-webcam": "^3.0.1"
+    "react-webcam": "^3.0.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
