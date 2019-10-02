@@ -8,6 +8,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import { withStyles } from "@material-ui/core/styles";
 
+import { actionCreators } from "./store";
+
 const styles = theme => ({
   list: {
     padding: "0"
@@ -19,6 +21,9 @@ function CourseStats(props) {
   // vars from store
   const { labStats, tutStats } = props;
 
+  // methods from store
+  const { loadSessionAttendance, handleInputUpdate } = props;
+
   return (
     <React.Fragment>
       {labStats.length > 0 && (
@@ -28,9 +33,13 @@ function CourseStats(props) {
               {labStats.map((att, index) => (
                 <React.Fragment key={index}>
                   <ListItem
-                    //   button
+                    button
                     key={index}
-                    onClick={() => console.log(props.width)}
+                    onClick={() => {
+                      const title = `${att.index} - ${att.date}`;
+                      loadSessionAttendance(att.index, att.date);
+                      handleInputUpdate("tableTitle", title);
+                    }}
                   >
                     <ListItemText
                       primary={`${att.index} - ${att.date}: ${att.rate}`}
@@ -50,9 +59,13 @@ function CourseStats(props) {
               {tutStats.map((att, index) => (
                 <React.Fragment key={index}>
                   <ListItem
-                    //   button
+                    button
                     key={index}
-                    onClick={() => console.log(props.width)}
+                    onClick={() => {
+                      const title = `${att.index} - ${att.date}`;
+                      loadSessionAttendance(att.index, att.date);
+                      handleInputUpdate("tableTitle", title);
+                    }}
                   >
                     <ListItemText
                       primary={`${att.index} - ${att.date}: ${att.rate}`}
@@ -76,7 +89,16 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  handleInputUpdate: (name, value) => {
+    dispatch(actionCreators.handleInputUpdate(name, value));
+  },
+  loadSessionAttendance: (index, date) => {
+    dispatch(actionCreators.loadSessionAttendance(index, date));
+  }
+});
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withStyles(styles)(CourseStats));

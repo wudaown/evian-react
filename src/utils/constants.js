@@ -53,3 +53,76 @@ export const TUT_STATS = [
   { index: "11030", rate: "45/46", date: "09-04-19", time: "1030" },
   { index: "11030", rate: "45/46", date: "09-04-19", time: "1030" }
 ];
+
+export const SESSION_ATTENDANCE = [
+  {
+    name: "Andrew",
+    matric: "U1620493L",
+    status: "absent",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "See",
+    matric: "U1620593L",
+    status: "mc",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "Lee",
+    matric: "U1620693L",
+    status: "present",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "Mark",
+    matric: "U1620483L",
+    status: "present",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "David",
+    matric: "U1620413L",
+    status: "present",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "Andrew",
+    matric: "U1620493L",
+    status: "absent",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "See",
+    matric: "U1620593L",
+    status: "mc",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "Lee",
+    matric: "U1620693L",
+    status: "present",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "Mark",
+    matric: "U1620483L",
+    status: "present",
+    index: "15093",
+    time: "08-04-19"
+  },
+  {
+    name: "David",
+    matric: "U1620413L",
+    status: "present",
+    index: "15093",
+    time: "08-04-19"
+  }
+];

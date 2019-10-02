@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Header from "../Header";
 import UserHeader from "./UserHeader";
 import CourseList from "./CourseList";
+import SessionAttendance from "./SessionAttendance";
 
 function Staff(props) {
   return (
@@ -10,6 +11,7 @@ function Staff(props) {
       <Header />
       <UserHeader />
       <CourseList />
+      <SessionAttendance />
     </React.Fragment>
   );
 }

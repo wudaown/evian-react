@@ -1,6 +1,12 @@
 import * as actionTypes from "./actionTypes";
-import { PostLoginAPI, PostAttendanceAPI } from "../../api";
-import { ATTENDANCE } from "../../utils/constants";
+import {
+  PostLoginAPI,
+  PostAttendanceAPI,
+  PostCourstStatsAPI,
+  PostSessionAttendanceAPI,
+  PostOverwriteAPI
+} from "../../api";
+import { ATTENDANCE, STUDENT } from "../../utils/constants";
 
 export const handleInputUpdate = (name, value) => {
   return {
@@ -16,16 +22,61 @@ export const loadAttendance = course => {
     const { username } = state.LoginReducer;
     const { domain } = state.PagesReducer;
 
-    // PostAttendanceAPI({ username, domain, course })
+    // if (domain === STUDENT) {
+    //   PostAttendanceAPI({ username, domain, course })
+    //     .then(res => {
+    //       if (res.state) {
+    //         dispatch(handleInputUpdate("attendance", res.attendance));
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // } else if (domain === STAFF) {
+    //   PostCourstStatsAPI({ username, domain, course })
+    //     .then(res => {
+    //       dispatch(handleInputUpdate("labStats", res.lab));
+    //       dispatch(handleInputUpdate("labStats", res.tut));
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // }
+
+    dispatch(handleInputUpdate("attendance", ATTENDANCE));
+  };
+};
+
+export const loadSessionAttendance = (index, date) => {
+  return dispatch => {
+    // PostSessionAttendanceAPI({ index, date })
     //   .then(res => {
-    //     if (res.state) {
-    //       dispatch(handleInputUpdate("attendance", res.attendance));
-    //     }
+    //     const { student } = res;
+    //     student.forEach(element => {
+    //       element["index"] = index;
+    //       element["time"] = date;
+    //     });
+    //     dispatch(handleInputUpdate("sessionAttendnace", res.student));
+    //     dispatch(handleInputUpdate("openSession", true));
     //   })
     //   .catch(err => {
     //     console.log(err);
     //   });
 
-    dispatch(handleInputUpdate("attendance", ATTENDANCE));
+    dispatch(handleInputUpdate("openSession", true));
+  };
+};
+
+export const overwriteStatus = data => {
+  return dispatch => {
+    PostOverwriteAPI(data)
+      .then(res => {
+        if (res.state) {
+          return true;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 };

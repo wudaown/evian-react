@@ -11,6 +11,7 @@ import SignatureCanvas from "react-signature-canvas";
 import ReactLoading from "react-loading";
 
 import Message from "../Message";
+import Header from "../Header";
 
 import { PostFacialAPI } from "../api";
 
@@ -46,98 +47,103 @@ function Facial() {
   }, [pad]);
 
   return (
-    <Container maxWidth="sm">
-      <Grid
-        container
-        spacing={2}
-        alignContent="center"
-        alignItems="center"
-        justify="center"
-      >
-        <Grid item xs={12}>
-          <Typography>Place your face in the center of the frame. </Typography>
-          <Typography>Click Take when ready. </Typography>
-        </Grid>
-        {loading && (
-          <Grid item xs={2}>
-            <ReactLoading type="spinningBubbles" color="#3f51b5" />
+    <React.Fragment>
+      <Header />
+      <Container maxWidth="sm">
+        <Grid
+          container
+          spacing={2}
+          alignContent="center"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item xs={12}>
+            <Typography>
+              Place your face in the center of the frame.{" "}
+            </Typography>
+            <Typography>Click Take when ready. </Typography>
           </Grid>
-        )}
-        <Grid item xs={12}>
-          {!loading && (
-            <Message
-              variant={state}
-              message={message}
-              open={showMessage}
-              onClose={() => setShowMessage(false)}
-            />
+          {loading && (
+            <Grid item xs={2}>
+              <ReactLoading type="spinningBubbles" color="#3f51b5" />
+            </Grid>
           )}
-        </Grid>
-        {mode === "img" ? (
-          <Paper>
+          <Grid item xs={12}>
             {!loading && (
-              <Grid item xs={12}>
-                <Webcam
-                  audio={false}
-                  ref={webcamRef}
-                  screenshotFormat="image/jpeg"
-                  width={530}
-                />
-              </Grid>
+              <Message
+                variant={state}
+                message={message}
+                open={showMessage}
+                onClose={() => setShowMessage(false)}
+              />
             )}
-          </Paper>
-        ) : (
-          <Paper>
-            {!loading && (
-              <Grid item xs={12}>
-                <SignatureCanvas
-                  ref={pad}
-                  canvasProps={{
-                    width: 530,
-                    height: 268,
-                    className: "sigCanvas"
-                  }}
-                />
-              </Grid>
-            )}
-          </Paper>
-        )}
-        <Grid item xs={6}>
-          {/* <Button color="primary" variant="contained" onClick={capture}>
+          </Grid>
+          {mode === "img" ? (
+            <Paper>
+              {!loading && (
+                <Grid item xs={12}>
+                  <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    width={530}
+                  />
+                </Grid>
+              )}
+            </Paper>
+          ) : (
+            <Paper>
+              {!loading && (
+                <Grid item xs={12}>
+                  <SignatureCanvas
+                    ref={pad}
+                    canvasProps={{
+                      width: 530,
+                      height: 268,
+                      className: "sigCanvas"
+                    }}
+                  />
+                </Grid>
+              )}
+            </Paper>
+          )}
+          <Grid item xs={6}>
+            {/* <Button color="primary" variant="contained" onClick={capture}>
           Take
         </Button> */}
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={loading}
-            onClick={() => {
-              setLoading(true);
-              if (mode === "img") {
-                PostFacialAPI({ count: count })
-                  .then(res => {
-                    setTimeout(() => {
-                      setState(res.state);
-                      setMessage(res.message);
-                      setCount(count + 1);
-                      setMode(res.mode);
-                      setShowMessage(true);
-                      setLoading(false);
-                    }, 1000);
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
-              } else {
-                getPad();
-              }
-            }}
-            fullWidth
-          >
-            {mode === "img" ? "Take" : "Sign"}
-          </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              disabled={loading}
+              onClick={() => {
+                setLoading(true);
+                if (mode === "img") {
+                  PostFacialAPI({ count: count })
+                    .then(res => {
+                      setTimeout(() => {
+                        setState(res.state);
+                        setMessage(res.message);
+                        setCount(count + 1);
+                        setMode(res.mode);
+                        setShowMessage(true);
+                        setLoading(false);
+                      }, 1000);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+                } else {
+                  getPad();
+                }
+              }}
+              fullWidth
+            >
+              {mode === "img" ? "Take" : "Sign"}
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </React.Fragment>
   );
 }
 

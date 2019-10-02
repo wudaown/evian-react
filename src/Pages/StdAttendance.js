@@ -30,7 +30,6 @@ function StdAttendance(props) {
                   <ListItem
                     //   button
                     key={index}
-                    onClick={() => console.log(props.width)}
                   >
                     <ListItemText
                       primary={`${att.index}: ${att.type} - ${att.date}:${att.time}:${att.duration} : ${att.status}`}

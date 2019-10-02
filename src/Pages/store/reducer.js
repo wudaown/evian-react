@@ -1,18 +1,22 @@
 import * as actionTypes from "./actionTypes";
 import {
   STAFF,
+  STUDENT,
   COURSES,
   ATTENDANCE,
   LAB_STATS,
-  TUT_STATS
+  TUT_STATS,
+  SESSION_ATTENDANCE
 } from "../../utils/constants";
 
 // const defaultState = {
 //   courses: [],
 //   domain: "",
 //   attendance: [],
-//   labStats: []
-//   tutStats: []
+//   labStats: [],
+//   tutStats: [],
+//   sessionAttendance: [],
+//   openSession: false
 // };
 
 const defaultState = {
@@ -20,7 +24,10 @@ const defaultState = {
   domain: STAFF,
   attendance: ATTENDANCE,
   labStats: LAB_STATS,
-  tutStats: TUT_STATS
+  tutStats: TUT_STATS,
+  sessionAttendance: SESSION_ATTENDANCE,
+  openSession: false,
+  tableTitle: ""
 };
 
 export default (state = defaultState, action) => {
