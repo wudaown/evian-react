@@ -28,20 +28,21 @@ export const handleLogin = ownProps => {
     if (check) {
       dispatch(handleInputUpdate("error", false));
       // uncomment when endpoint is ready
-      //   PostLoginAPI({ username, password }).then(res => {
-      //     dispatch(handleInputUpdate("error", res.state));
-      //     dispatch(handleInputUpdate("message", "Login failed"));
-      //   dispatch(PagesHandleInputUpdate("courses", res.course));
-      //   dispatch(PagesHandleInputUpdate("courses", res.domain));
-      dispatch(PagesHandleInputUpdate("courses", COURSES));
-      dispatch(PagesHandleInputUpdate("domain", STUDENT));
-      const res = { domain: STUDENT };
+      // PostLoginAPI({ username, password });
+        PostLoginAPI({ username, password }).then(res => {
+          dispatch(handleInputUpdate("error", res.state));
+          dispatch(handleInputUpdate("message", "Login failed"));
+        dispatch(PagesHandleInputUpdate("courses", res.course));
+        dispatch(PagesHandleInputUpdate("domain", res.domain));
+      // dispatch(PagesHandleInputUpdate("courses", COURSES));
+      // dispatch(PagesHandleInputUpdate("domain", STUDENT));
+      // const res = { domain: STUDENT };
       if (res.domain === STUDENT) {
         ownProps.history.push("/student");
       } else if (res.domain === STAFF) {
         ownProps.history.push("/staff");
       }
-      //   });
+        });
     }
   };
 };

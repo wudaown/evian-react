@@ -20,6 +20,7 @@ function CourseStats(props) {
   const { classes } = props;
   // vars from store
   const { labStats, tutStats } = props;
+  console.log(labStats);
 
   // methods from store
   const { loadSessionAttendance, handleInputUpdate } = props;
