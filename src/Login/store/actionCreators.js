@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 import { handleInputUpdate as PagesHandleInputUpdate } from "../../Pages/store/actionCreators";
 import { PostLoginAPI } from "../../api";
 import { STUDENT, STAFF } from "../../utils/constants";
-import { COURSES } from "../../utils/constants";
+// import { COURSES } from "../../utils/constants";
 
 export const handleInputUpdate = (name, value) => {
   return {
@@ -30,10 +30,19 @@ export const handleLogin = ownProps => {
       // uncomment when endpoint is ready
       // PostLoginAPI({ username, password });
         PostLoginAPI({ username, password }).then(res => {
-          dispatch(handleInputUpdate("error", res.state));
-          dispatch(handleInputUpdate("message", "Login failed"));
-        dispatch(PagesHandleInputUpdate("courses", res.course));
-        dispatch(PagesHandleInputUpdate("domain", res.domain));
+           // console.log(res.image);
+           if (res.state){
+            dispatch(PagesHandleInputUpdate("courses", res.course));
+            dispatch(PagesHandleInputUpdate("domain", res.domain));
+            // empty localstorage
+            dispatch(PagesHandleInputUpdate("attendance", []));
+            dispatch(PagesHandleInputUpdate("labStats", []));
+            dispatch(PagesHandleInputUpdate("tutStats", []));
+            dispatch(handleInputUpdate("image", res.image));
+           } else {
+            dispatch(handleInputUpdate("error", true));
+            dispatch(handleInputUpdate("message", "Login failed"));
+           }
       // dispatch(PagesHandleInputUpdate("courses", COURSES));
       // dispatch(PagesHandleInputUpdate("domain", STUDENT));
       // const res = { domain: STUDENT };

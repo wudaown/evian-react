@@ -32,7 +32,7 @@ function StdAttendance(props) {
                     key={index}
                   >
                     <ListItemText
-                      primary={`${att.index}: ${att.type} - ${att.date}:${att.time}:${att.duration} : ${att.status}`}
+                      primary={`${att.index} | ${att.type} | ${att.date} | ${att.time} | ${att.duration} | ${att.status}`}
                     />
                   </ListItem>
                   <Divider />

@@ -53,6 +53,7 @@ function SessionAttendance(props) {
 
   // methods from store
   const { handleInputUpdate, overwriteStatus } = props;
+
   const columns = [
     {
       title: "Name",

@@ -1,12 +1,12 @@
 import * as actionTypes from "./actionTypes";
 import {
-  PostLoginAPI,
+  // PostLoginAPI,
   PostAttendanceAPI,
   PostCourstStatsAPI,
   PostSessionAttendanceAPI,
   PostOverwriteAPI
 } from "../../api";
-import { ATTENDANCE, STUDENT, STAFF } from "../../utils/constants";
+import { STUDENT, STAFF } from "../../utils/constants";
 
 export const handleInputUpdate = (name, value) => {
   return {
@@ -27,6 +27,9 @@ export const loadAttendance = course => {
         .then(res => {
           if (res.state) {
             dispatch(handleInputUpdate("attendance", res.attendance));
+            // empty labStats and tutStats
+            dispatch(handleInputUpdate("labStats", []));
+            dispatch(handleInputUpdate("tutStats", []));
           }
         })
         .catch(err => {
@@ -35,6 +38,9 @@ export const loadAttendance = course => {
     } else if (domain === STAFF) {
       PostCourstStatsAPI({ username, domain, course })
         .then(res => {
+          // empty attendance
+          dispatch(handleInputUpdate("attendance", []));
+
           dispatch(handleInputUpdate("labStats", res.lab));
           dispatch(handleInputUpdate("tutStats", res.tut));
         })
@@ -68,15 +74,57 @@ export const loadSessionAttendance = (index, date) => {
 };
 
 export const overwriteStatus = data => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const state = getState();
+    console.log(state);
     PostOverwriteAPI(data)
       .then(res => {
         if (res.state) {
-          return true;
+          
+          // Update rate value
+          const { username } = state.LoginReducer;
+          const { domain } = state.PagesReducer;
+          const course = res.course;
+
+          if (domain === STUDENT) {
+            PostAttendanceAPI({ username, domain, course })
+              .then(res => {
+                if (res.state) {
+                  dispatch(handleInputUpdate("attendance", res.attendance));
+                  // empty labStats and tutStats
+                  dispatch(handleInputUpdate("labStats", []));
+                  dispatch(handleInputUpdate("tutStats", []));
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          } else if (domain === STAFF) {
+            PostCourstStatsAPI({ username, domain, course })
+              .then(res => {
+                // empty attendance
+                dispatch(handleInputUpdate("attendance", []));
+
+                dispatch(handleInputUpdate("labStats", res.lab));
+                dispatch(handleInputUpdate("tutStats", res.tut));
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+          // Update rate value
+
         }
       })
       .catch(err => {
         console.log(err);
       });
+  };
+};
+
+export const handleLogout = () => {
+  return dispatch => {
+    localStorage.setItem("login_state",null);
+    localStorage.setItem("page_state",null);
   };
 };

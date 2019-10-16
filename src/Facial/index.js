@@ -117,8 +117,10 @@ function Facial() {
               disabled={loading}
               onClick={() => {
                 setLoading(true);
+                
                 if (mode === "img") {
-                  PostFacialAPI({ count: count })
+                  const imageSrc = webcamRef.current.getScreenshot();
+                  PostFacialAPI({ count: count, image:imageSrc })
                     .then(res => {
                       setTimeout(() => {
                         setState(res.state);
@@ -133,8 +135,13 @@ function Facial() {
                       console.log(err);
                     });
                 } else {
-                  getPad();
+                  // getPad();
+                  const imageSrc = pad.current.toDataURL();
+                  pad.current.clear();
                 }
+                
+                
+                
               }}
               fullWidth
             >

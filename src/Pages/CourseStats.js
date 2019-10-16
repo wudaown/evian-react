@@ -20,7 +20,6 @@ function CourseStats(props) {
   const { classes } = props;
   // vars from store
   const { labStats, tutStats } = props;
-  console.log(labStats);
 
   // methods from store
   const { loadSessionAttendance, handleInputUpdate } = props;
@@ -37,13 +36,13 @@ function CourseStats(props) {
                     button
                     key={index}
                     onClick={() => {
-                      const title = `${att.index} - ${att.date}`;
+                      const title = `${att.course_code} - ${att.index} - ${att.date}`;
                       loadSessionAttendance(att.index, att.date);
                       handleInputUpdate("tableTitle", title);
                     }}
                   >
                     <ListItemText
-                      primary={`${att.index} - ${att.date}: ${att.rate}`}
+                      primary={`${att.index} | ${att.date} | ${att.rate}`}
                     />
                   </ListItem>
                   <Divider />
@@ -63,13 +62,13 @@ function CourseStats(props) {
                     button
                     key={index}
                     onClick={() => {
-                      const title = `${att.index} - ${att.date}`;
+                      const title = `${att.course_code} - ${att.index} - ${att.date}`;
                       loadSessionAttendance(att.index, att.date);
                       handleInputUpdate("tableTitle", title);
                     }}
                   >
                     <ListItemText
-                      primary={`${att.index} - ${att.date}: ${att.rate}`}
+                      primary={`${att.index} | ${att.date} | ${att.rate}`}
                     />
                   </ListItem>
                   <Divider />
